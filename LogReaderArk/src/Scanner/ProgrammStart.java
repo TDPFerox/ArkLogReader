@@ -10,9 +10,9 @@ public class ProgrammStart {
 		
 		File file = new File("C:/Users/finne/Desktop/ArkServerLogs/ShooterGame.log");
 		Scanner scan = new Scanner(file);
-		
+		StringAnalyser timestamp = new StringAnalyser();
 		while(scan.hasNextLine()) {
-			System.out.println(scan.nextLine());
+			System.out.println(timestamp.Ergebnis(scan.nextLine()));
 		}
 	}
 
