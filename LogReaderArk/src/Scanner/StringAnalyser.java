@@ -3,6 +3,7 @@ package Scanner;
 public class StringAnalyser {
 	
 	public String Zeitstempel(String Line) {
+
 		
 		String Timestamp = "";
 		
@@ -64,5 +65,57 @@ public class StringAnalyser {
 			}
 		}
 		return Timestamp;
+	}
+	
+	public String UserLogin(String Line) {
+		
+		String Result = "";
+		
+		int Count = 0;
+		int Count2 = 0;
+		int LineLenght = 0;
+		int mode = 0;
+		
+		boolean joiningMessage = false;
+		
+		char a = ' ';
+		
+		LineLenght = Line.length();
+		
+		for(int i = 0; i<LineLenght; i++) {
+			a = Line.charAt(i);
+			
+			switch(mode){
+			case 0:
+				if (Count == 2 && Count2 < 3) {
+					Count = 0;
+					Result = "";
+				}
+				
+				if(a == '[' || a == ']') {
+					Count = Count + 1;
+					Count2 = Count2 + 1;
+				}
+				
+				if(Count2 > 2) {
+					Result = Result + a;
+				}
+				
+				if(Count2 > 3 && Result.equals("[953]")) {
+					Result = Result + " ";
+					mode = 1;
+				}else if(Count2 > 3){
+					Result = "";
+				}
+				
+			break;
+			case 1:
+				Result = Result + a;
+			break;
+			}
+			
+		}	
+		
+		return Result;
 	}
 }
