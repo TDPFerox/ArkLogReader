@@ -12,8 +12,6 @@ public class ProgrammStart {
 		Scanner scan = new Scanner(file);
 		StringAnalyser timestamp = new StringAnalyser();
 		
-		
-		
 		while(scan.hasNextLine()) {
 			System.out.println(timestamp.Zeitstempel(scan.nextLine()));
 		}
