@@ -8,7 +8,7 @@ public class ProgrammStart {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		File file = new File("C:/Users/finne/Desktop/ArkServerLogs/ShooterGame.log");
+		File file = new File("C:\\Users\\finne\\git\\ArkLogReader\\ServerGame.log");
 		Scanner scan = new Scanner(file);
 		Scanner scan2 = new Scanner(file);
 		StringAnalyser timestamp = new StringAnalyser();
@@ -24,7 +24,7 @@ public class ProgrammStart {
 			if(Zeit.equals("") || User.equals("")) {
 				
 			}else{
-				Output = Zeit + " " + User;
+				Output = User;
 				System.out.println(Output);
 			}
 		}

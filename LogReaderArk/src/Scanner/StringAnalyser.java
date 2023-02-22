@@ -70,13 +70,17 @@ public class StringAnalyser {
 	public String UserLogin(String Line) {
 		
 		String Result = "";
+		String TimStam = "";
+		String Num = "";
+		String Message = "";
+		String UserName = "";
+		String JoinMessage = "";
 		
 		int Count = 0;
-		int Count2 = 0;
+		int Zustand = 0;
 		int LineLenght = 0;
+		int MessageLength = 0;
 		int mode = 0;
-		
-		boolean joiningMessage = false;
 		
 		char a = ' ';
 		
@@ -87,35 +91,85 @@ public class StringAnalyser {
 			
 			switch(mode){
 			case 0:
-				if (Count == 2 && Count2 < 3) {
+				if(a == ']') {
 					Count = 0;
-					Result = "";
-				}
-				
-				if(a == '[' || a == ']') {
-					Count = Count + 1;
-					Count2 = Count2 + 1;
-				}
-				
-				if(Count2 > 2) {
-					Result = Result + a;
-				}
-				
-				if(Count2 > 3 && Result.equals("[953]")) {
-					Result = Result + " ";
 					mode = 1;
-				}else if(Count2 > 3){
-					Result = "";
 				}
-				
+				if(Count == 1) {
+					TimStam = TimStam + a;
+				}
+				if(a == '[') {
+					Count = 1;
+				}
 			break;
 			case 1:
-				Result = Result + a;
+				if(a == ']') {
+					Count = 0;
+					mode = 2;
+				}
+				if(Count == 1) {
+					Num = Num + a;
+				}
+				if(a == '[') {
+					Count = 1;
+				}
+			break;
+			case 2:
+				Message = Message + a;
 			break;
 			}
 			
 		}	
 		
-		return Result;
+		MessageLength = Message.length();
+		mode = 0;
+		TimStam = "";
+		
+		for(int i = 0; i<MessageLength; i++) {
+			a = Message.charAt(i);
+			
+			switch(mode){
+			case 0:
+				if(a == ':') {
+					mode = 1;
+				}else {
+					TimStam = TimStam + a;
+				}
+			break;
+			case 1:
+				if(a == ' ' && Zustand == 0) {
+					mode = 2;
+					Zustand = 1;
+				}
+			break;
+			case 2:
+				if(a == ' ' && Zustand == 1) {
+					mode = 3;
+				}else {
+					UserName = UserName + a;
+				}
+			break;
+			case 3:
+				if(a == '!') {
+					JoinMessage = JoinMessage + a;
+					mode = 4;
+				}else {
+					JoinMessage = JoinMessage + a;
+				}
+			break;
+			default:
+				
+			break;
+			}
+		}
+		
+		if(JoinMessage.equals("joined this ARK!")) {
+			Result = UserName + " " + TimStam + " " + JoinMessage;
+			return Result;
+		}else {
+			Result = "";
+			return Result;
+		}
+		
 	}
 }
